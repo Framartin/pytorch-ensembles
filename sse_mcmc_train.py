@@ -1,5 +1,6 @@
 import sys
 import os
+import time
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -165,10 +166,15 @@ def test(epoch):
             
             all_predictions.append(F.softmax(outputs, dim=1).cpu().numpy())
             all_targets.append(targets.cpu().numpy())
+    # compute time
+    if use_cuda:
+        torch.cuda.synchronize()
+    end_time = time.perf_counter()
 
-    print('Test set:  Loss {:.3f} | Acc {:.3f}% ({}/{})\n'.format(
+    print('Test set:  Loss {:.3f} | Acc {:.3f}% ({}/{}) | Elapsed {:.3f} min \n'.format(
         test_loss/len(testloader),
-        100. * float(correct) / total, correct, total))
+        100. * float(correct) / total, correct, total,
+        (end_time - start_time) / 60))
     
     all_predictions = np.vstack(all_predictions)
     all_targets = np.concatenate(all_targets).astype('int64')
@@ -187,9 +193,12 @@ if args.inject_noise:
     method_name = 'cSGLD'
 else:
     method_name = 'SSE'
-    
-    
-    
+
+# time code
+if use_cuda:
+    torch.cuda.synchronize()
+start_time = time.perf_counter()
+
 for epoch in range(epochs):
     if epoch == 0 or (args.cold_restarts and epoch%args.cycle_epochs == 0):
         init_net()
