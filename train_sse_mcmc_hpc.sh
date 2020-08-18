@@ -1,5 +1,5 @@
 #!/bin/bash -l
-#SBATCH --time=0-14:00:00 # 14 hours
+#SBATCH --time=0-07:00:00 # 7 hours
 #SBATCH --partition=gpu # Use the batch partition reserved for passive jobs
 #SBATCH --qos=qos-gpu
 #SBATCH -J TrainCycl      # Set the job name
@@ -18,4 +18,5 @@ module load lang/Python
 source ../venv/bin/activate
 
 
-bash ./train_sse_mcmc.sh CIFAR10 VGG16 1 ../models ../data cSGLD
+#bash ./train_sse_mcmc.sh CIFAR10 VGG16 1 ../models ../data cSGLD
+bash ./train_sse_mcmc.sh CIFAR10 PreResNet110 1 ../models ../data cSGLD
