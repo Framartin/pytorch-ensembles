@@ -208,7 +208,7 @@ for epoch in range(epochs):
     if (epoch % args.cycle_epochs) + 1 > args.cycle_epochs-args.cycle_saves:
         print('save!')
         net.cpu()
-        filename = f'{args.dataset}-{method_name}_{args.model}_run_{args.iter}-{mt}.pt'
+        filename = f'{args.dataset}-{method_name}_{args.model}_run_{args.iter}-{mt:03}.pt'
         path = os.path.join(args.dir, filename)
         torch.save(net.state_dict(), path)
         mt += 1
