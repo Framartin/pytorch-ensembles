@@ -31,8 +31,8 @@ else
   WD=5e-4
 fi
 
-ipython -- train/cifar/sse_mcmc_train.py $INJECT_NOISE_OR_NOT \
-    --dir="${BASE_DIR}/${METHOD,,}/${DATASET}_${ARCH}_it_${ITER}" \
+python sse_mcmc_train.py $INJECT_NOISE_OR_NOT \
+    --dir="${BASE_DIR}/${METHOD}/${DATASET}_${ARCH}_it_${ITER}" \
     --model="$ARCH" --dataset="$DATASET" --noise_epochs=$NOISE_EPOCHS --data_path="$DATA_PATH" \
     --alpha=1 --cycles=$CYCLES --iter="$ITER" \
     --cycle_epochs=$CYCLE_EPOCHS --cycle_saves=$CYCLE_SAVES --max_lr=$MAX_LR --wd=$WD
