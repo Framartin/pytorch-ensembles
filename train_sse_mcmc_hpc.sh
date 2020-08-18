@@ -15,7 +15,7 @@
 set -x
 module load lang/Python
 
-source venv/bin/activate
+source ../venv/bin/activate
 
 
 bash ./train_sse_mcmc.sh CIFAR10 VGG16 1 ../models ../data cSGLD
