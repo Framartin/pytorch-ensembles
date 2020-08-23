@@ -30,6 +30,10 @@ class CIFAR100_CSGMCMC:
     train = compose_transform(mean=[0.5071, 0.4867, 0.4408], std=[0.2675, 0.2565, 0.2761], aug=True)
     test  = compose_transform(mean=[0.5071, 0.4867, 0.4408], std=[0.2675, 0.2565, 0.2761], aug=False)
 
+class NoNormalization:
+    train = compose_transform(mean=[0., 0., 0.], std=[1, 1, 1], aug=True)
+    test  = compose_transform(mean=[0., 0., 0.], std=[1, 1, 1], aug=False)
+
 def get_transform(method, model):
     if method == 'fge':
         return VGG
