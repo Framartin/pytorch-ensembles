@@ -8,8 +8,8 @@ There should not influence the training process much because of the batchnorm
 def compose_transform(mean, std, aug):
     if aug:
         return transforms.Compose([
-            transforms.RandomHorizontalFlip(),
             transforms.RandomCrop(32, padding=4),
+            transforms.RandomHorizontalFlip(),
             transforms.ToTensor(),
             transforms.Normalize(mean=mean, std=std)
         ])
