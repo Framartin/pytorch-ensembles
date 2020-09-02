@@ -34,6 +34,10 @@ class NoNormalization:
     train = compose_transform(mean=[0., 0., 0.], std=[1, 1, 1], aug=True)
     test  = compose_transform(mean=[0., 0., 0.], std=[1, 1, 1], aug=False)
 
+class NoNormalization2:
+    train = compose_transform(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5], aug=True)
+    test  = compose_transform(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5], aug=False)
+
 def get_transform(method, model):
     if method == 'fge':
         return VGG
