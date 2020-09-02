@@ -1,5 +1,5 @@
 #!/bin/bash -l
-#SBATCH --time=0-9:00:00 # 9 hours
+#SBATCH --time=0-0:09:00 # 9 hours
 #SBATCH --partition=gpu # Use the batch partition reserved for passive jobs
 #SBATCH --qos=qos-gpu
 #SBATCH -J TrainVGG19  # Set the job name
