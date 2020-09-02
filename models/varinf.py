@@ -5,13 +5,11 @@ from torch import functional as F
 from torch.nn.parameter import Parameter
 from torch.nn.modules.utils import _pair
 from torch.nn.modules.module import Module
-from torch._jit_internal import weak_module, weak_script_method
 from torch.nn import init
 from torch import randn_like
 from torch.nn import functional as F
 
 
-@weak_module
 class _BayesConvNd(Module):
     __constants__ = ['stride', 'padding', 'dilation', 'groups', 'bias']
 
@@ -59,7 +57,6 @@ class _BayesConvNd(Module):
             bound = 1 / math.sqrt(fan_in)
             init.uniform_(self.bias, -bound, bound)
 
-@weak_module
 class BayesConv2d(_BayesConvNd):
     def __init__(self, in_channels, out_channels, kernel_size, stride=1,
                  padding=0, dilation=1, groups=1, bias=True, lv_init=-5, var_p=-1):
@@ -72,7 +69,6 @@ class BayesConv2d(_BayesConvNd):
             in_channels, out_channels, kernel_size, stride, padding, dilation,
             False, _pair(0), groups, bias, lv_init=lv_init)
 
-    @weak_script_method
     def forward(self, input):
         eps = torch.randn_like(self.wlog_sigma)
         W = self.weight + eps * torch.exp(self.wlog_sigma)
