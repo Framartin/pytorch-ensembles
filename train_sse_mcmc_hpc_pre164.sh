@@ -1,5 +1,5 @@
 #!/bin/bash -l
-#SBATCH --time=0-24:00:00 # 17 hours
+#SBATCH --time=1-01:30:00 # 25 hours
 #SBATCH --partition=gpu # Use the batch partition reserved for passive jobs
 #SBATCH --qos=qos-gpu
 #SBATCH -J TrainPre164      # Set the job name
