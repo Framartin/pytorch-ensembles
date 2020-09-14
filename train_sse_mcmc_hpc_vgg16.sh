@@ -12,7 +12,7 @@
 #SBATCH --mail-type=end,fail
 
 
-module load lang/Python
+command -v module >/dev/null 2>&1 && module load lang/Python
 
 source ../venv/bin/activate
 set -x
