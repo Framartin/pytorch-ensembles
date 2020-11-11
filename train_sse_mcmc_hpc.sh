@@ -4,8 +4,8 @@
 #SBATCH --qos=qos-gpu
 #SBATCH -J TrainCycl      # Set the job name
 #SBATCH -N 1              # 1 computing nodes
-#SBATCH -n 2              # 2 tasks
-#SBATCH -c 2              # 2 cores per task
+#SBATCH -n 1              # 2 tasks
+#SBATCH -c 4              # 2 cores per task
 #SBATCH --gpus 1          # 1 GPU per tasks
 #SBATCH -C volta          # fix type of GPU to compare runtime
 #SBATCH -o "log/run_train_csgld_%j.log"
