@@ -1,5 +1,5 @@
 #!/bin/bash -l
-#SBATCH --time=0-17:00:00 # 17 hours
+#SBATCH --time=0-07:00:00 # 7 hours
 #SBATCH --partition=gpu # Use the batch partition reserved for passive jobs
 #SBATCH --qos=qos-gpu
 #SBATCH -J TrainCycl      # Set the job name
@@ -18,4 +18,4 @@ set -x
 
 
 bash ./train_sse_mcmc.sh CIFAR10 PreResNet110 1 ../models ../data cSGLD
-# on single GPU PreResNet110: 13 cycles of 62 epochs with 12 saves on 14 hours
+# on single GPU PreResNet110: 5 cycles of 50 epochs with 3 saves on XX hours
