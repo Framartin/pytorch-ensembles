@@ -25,10 +25,14 @@ DATAPATH="/work/projects/bigdata_sets/ImageNet/ILSVRC2012/raw-data/"
 LR=0.1
 CYCLES=10
 SAMPLES_PER_CYCLE=3
+#BATCH_SIZE=256
+WORKERS=16
+#debug:
+BATCH_SIZE=32
 
-# 1 node with 4 GPUs and 64 cpus (will use as much GPUs available on the node)
+# 1 node with 4 GPUs and 16 cpus (will use as much GPUs available on the node)
 python train_imagenet_csgld.py --data $DATAPATH --no-normalization --arch resnet50 \
-  --export-dir $DIR --workers 64 \
+  --export-dir $DIR --workers $WORKERS --batch-size $BATCH_SIZE \
   --lr $LR --max-lr $LR --print-freq 400 --dist-url tcp://127.0.0.1:5552 --multiprocessing-distributed --world-size 1 --rank 0 \
   --cycles $CYCLES --cycle-epochs 45 --samples-per-cycle $SAMPLES_PER_CYCLE --noise-epochs $SAMPLES_PER_CYCLE
 
