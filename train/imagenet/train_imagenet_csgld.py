@@ -79,8 +79,8 @@ parser.add_argument('--multiprocessing-distributed', action='store_true',
                          'multi node data parallel training')
 parser.add_argument('--cycle_epochs', default=10, type=int)
 parser.add_argument('--max_lr', default=0.1, type=float)
-parser.add_argument('--fname', type=str, default=None, required=False, help='checkpoint and outputs file name')
-parser.add_argument('--dir', type=str, default=None, required=False, help='training directory (default: None)')
+#parser.add_argument('--fname', type=str, default=None, required=False, help='checkpoint and outputs file name')
+parser.add_argument('--export-dir', type=str, default=None, required=True, help='training directory (default: None)')
 
 
 best_acc1 = 0
@@ -277,10 +277,10 @@ def main_worker(gpu, ngpus_per_node, args):
                     'state_dict': model.state_dict(),
                     'best_acc1': best_acc1,
                     'optimizer': optimizer.state_dict()}
-                path_ = '~/megares/'
+                path_ = args.export_dir
                 os.makedirs(path_ % (args.cycle_epochs, args.max_lr), exist_ok=True)
-                path_ = (path_ + '/ImageNet-SSE_ResNet50-%s.pth.tar') % epoch
-                print('\nEpoch %s acc %s Save model to %s\n' % (acc1, epoch, path_))
+                path_ = (path_ + f'/ImageNet-cSGLD_{args.arch}_{epoch:03}.pt.tar')
+                print('\nEpoch %s acc %s Save model to %s\n' % (epoch, acc1, path_))
                 save_checkpoint(tosave, filename=path_)
 
 def train(train_loader, model, criterion, optimizer, epoch, adjust_learning_rate_, args):
