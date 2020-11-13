@@ -6,7 +6,7 @@
 #SBATCH -J cSGLDImageNet  # Set the job name
 #SBATCH -N 1              # 1 computing nodes
 #SBATCH -n 1              # 1 tasks
-#SBATCH -c 64             # 64 cores per task
+#SBATCH -c 32             # 32 cores per task
 #SBATCH --gpus 4          # 4 GPU per tasks
 #SBATCH -C volta          # fix type of GPU to compare runtime
 #SBATCH -o "log/run_train_imagenet_csgld_%j.log"
