@@ -201,7 +201,7 @@ def main_worker(gpu, ngpus_per_node, args):
 
     # Data loading code
     traindir = os.path.join(args.data, 'train')
-    valdir = os.path.join(args.data, 'val')
+    valdir = os.path.join(args.data, 'validation')
     if args.no_normalization:
         normalize = transforms.Normalize(mean=[0., 0., 0.],
                                          std=[1., 1., 1.])
