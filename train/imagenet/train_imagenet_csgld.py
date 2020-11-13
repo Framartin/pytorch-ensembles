@@ -77,11 +77,10 @@ parser.add_argument('--multiprocessing-distributed', action='store_true',
                          'fastest way to use PyTorch for either single node or '
                          'multi node data parallel training')
 parser.add_argument('--cycles', default=10, type=int, help="Number of cycles")
-parser.add_argument('--cycle_epochs', default=45, type=int, help="Number of epochs per cycle.")
+parser.add_argument('--cycle-epochs', default=45, type=int, help="Number of epochs per cycle.")
 parser.add_argument('--samples-per-cycle', type=int, default=3, help="Number of sample to save per cycle")
-parser.add_argument('--noise_epochs', type=int, default=3, help="Number of epochs to add noise (should be the same than number of samples per cycle)")
-parser.add_argument('--max_lr', default=0.1, type=float, help="Max learning rate in a cycle")
-#parser.add_argument('--fname', type=str, default=None, required=False, help='checkpoint and outputs file name')
+parser.add_argument('--noise-epochs', type=int, default=3, help="Number of epochs to add noise (should be the same than number of samples per cycle)")
+parser.add_argument('--max-lr', default=0.1, type=float, help="Max learning rate in a cycle")
 parser.add_argument('--export-dir', type=str, default=None, required=True, help='training directory (default: None)')
 
 
