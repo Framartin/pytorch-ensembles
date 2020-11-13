@@ -5,9 +5,9 @@
 #SBATCH --partition=gpu # Use the batch partition reserved for passive jobs
 #SBATCH -J cSGLDImageNet  # Set the job name
 #SBATCH -N 1              # 1 computing nodes
-#SBATCH -n 1              # 1 tasks
-#SBATCH -c 16             # 16 cores per task
-#SBATCH --gpus 2          # 4 GPU per tasks
+#SBATCH -n 2              # 2 tasks
+#SBATCH -c 8              # 8 cores per task
+#SBATCH --gpus 1          # 4 GPU per tasks
 #SBATCH -C volta          # fix type of GPU to compare runtime
 #SBATCH -o "log/run_train_imagenet_csgld_%j.log"
 #SBATCH --mail-type=end,fail
@@ -29,7 +29,7 @@ SAMPLES_PER_CYCLE=3
 #WORKERS=16
 #PRINT_FREQ=400
 #debug:
-BATCH_SIZE=32
+BATCH_SIZE=64
 PRINT_FREQ=20
 WORKERS=8
 
