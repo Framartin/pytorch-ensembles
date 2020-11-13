@@ -16,6 +16,7 @@ import torch.utils.data.distributed
 import torchvision.transforms as transforms
 import torchvision.datasets as datasets
 import torchvision.models as models
+from torch.autograd import Variable
 
 from metrics import accuracy
 
@@ -75,8 +76,11 @@ parser.add_argument('--multiprocessing-distributed', action='store_true',
                          'N processes per node, which has N GPUs. This is the '
                          'fastest way to use PyTorch for either single node or '
                          'multi node data parallel training')
-parser.add_argument('--cycle_epochs', default=10, type=int)
-parser.add_argument('--max_lr', default=0.1, type=float)
+parser.add_argument('--cycles', default=10, type=int, help="Number of cycles")
+parser.add_argument('--cycle_epochs', default=45, type=int, help="Number of epochs per cycle.")
+parser.add_argument('--samples-per-cycle', type=int, default=3, help="Number of sample to save per cycle")
+parser.add_argument('--noise_epochs', type=int, default=3, help="Number of epochs to add noise (should be the same than number of samples per cycle)")
+parser.add_argument('--max_lr', default=0.1, type=float, help="Max learning rate in a cycle")
 #parser.add_argument('--fname', type=str, default=None, required=False, help='checkpoint and outputs file name')
 parser.add_argument('--export-dir', type=str, default=None, required=True, help='training directory (default: None)')
 
@@ -229,7 +233,7 @@ def main_worker(gpu, ngpus_per_node, args):
         batch_size=args.batch_size, shuffle=False,
         num_workers=args.workers, pin_memory=True)
 
-    args.cycles = 200  # TODO
+    args.cycles = args.cycles
     epoch_batches = len(train_loader)
     epochs = args.cycle_epochs * args.cycles
 
@@ -251,6 +255,7 @@ def main_worker(gpu, ngpus_per_node, args):
 
         for param_group in optimizer.param_groups:
             param_group['lr'] = lr
+        return lr
 
     if args.evaluate:
         validate(val_loader, model, criterion, args)
@@ -264,7 +269,7 @@ def main_worker(gpu, ngpus_per_node, args):
         train(train_loader, model, criterion, optimizer, epoch, adjust_learning_rate_, args)
         # print('train', epoch)
 
-        if epoch % args.cycle_epochs == args.cycle_epochs-1:
+        if (epoch % args.cycle_epochs) + 1 > args.cycle_epochs - args.samples_per_cycle:
             acc1 = validate(val_loader, model, criterion, args)
 
             if not args.multiprocessing_distributed or (args.multiprocessing_distributed
@@ -297,7 +302,7 @@ def train(train_loader, model, criterion, optimizer, epoch, adjust_learning_rate
 
     end = time.time()
     for i, (images, target) in enumerate(train_loader):
-        adjust_learning_rate_(optimizer, epoch, i)
+        lr = adjust_learning_rate_(optimizer, epoch, i)
 
         # measure data loading time
         data_time.update(time.time() - end)
@@ -308,18 +313,24 @@ def train(train_loader, model, criterion, optimizer, epoch, adjust_learning_rate
 
         # compute output
         output = model(images)
-        loss = criterion(output, target)
+        #loss = criterion(output, target)
+        if (epoch % args.cycle_epochs) + 1 > args.cycle_epochs - args.noise_epochs:
+            alpha = 1 - args.momentum
+            loss_noise = noise_loss(model, lr, alpha) / len(train_loader)
+            loss = criterion(output, target) + loss_noise
+        else:
+            loss = criterion(output, target)
+
+        # compute gradient and do SGD step
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
 
         # measure accuracy and record loss
         acc1, acc5 = accuracy(output, target, topk=(1, 5))
         losses.update(loss.item(), images.size(0))
         top1.update(acc1[0], images.size(0))
         top5.update(acc5[0], images.size(0))
-
-        # compute gradient and do SGD step
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
 
         # measure elapsed time
         batch_time.update(time.time() - end)
@@ -380,6 +391,15 @@ def validate(val_loader, model, criterion, args, ret_lp=False):
 
 def save_checkpoint(state, filename):
     torch.save(state, filename)
+
+def noise_loss(model, lr, alpha):
+    noise_loss = 0.0
+    noise_std = (2/lr*alpha)**0.5  # because we take grad of this term and multiply the result with lr
+    for var in model.parameters():
+        means = torch.zeros(var.size()).cuda(args.gpu)
+        noise_loss += torch.sum(var * Variable(torch.normal(means, std=noise_std).cuda(args.gpu),
+                           requires_grad = False))
+    return noise_loss
 
 
 class AverageMeter(object):
