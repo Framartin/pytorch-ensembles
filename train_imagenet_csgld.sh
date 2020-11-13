@@ -27,7 +27,7 @@ CYCLES=10
 SAMPLES_PER_CYCLE=3
 
 # 1 node with 4 GPUs and 64 cpus (will use as much GPUs available on the node)
-python ./train/imagenet/train_imagenet_sse.py --data $DATAPATH --no-normalization --arch resnet50 \
+python train_imagenet_csgld.py --data $DATAPATH --no-normalization --arch resnet50 \
   --export-dir $DIR --workers 64 \
   --lr $LR --max_lr $LR --print-freq 400 --dist-url tcp://127.0.0.1:5552 --multiprocessing-distributed --world-size 1 --rank 0 \
   --cycles $CYCLES --cycle_epochs 45 --samples-per-cycle $SAMPLES_PER_CYCLE --noise-epochs $SAMPLES_PER_CYCLE
