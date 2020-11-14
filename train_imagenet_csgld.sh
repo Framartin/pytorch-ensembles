@@ -23,6 +23,7 @@ set -x
 DIR="models/ImageNet/resnet50/cSGLD_cycles15_savespercycle12_it1"
 DATAPATH="/work/projects/bigdata_sets/ImageNet/ILSVRC2012/raw-data/"
 DIST_URL="file://${SCRATCH}tmp/torchfilestore"  # becareful: should be unique per script call
+rm -f ${SCRATCH}tmp/torchfilestore # delete previous file
 LR=0.1
 CYCLES=10
 SAMPLES_PER_CYCLE=3
