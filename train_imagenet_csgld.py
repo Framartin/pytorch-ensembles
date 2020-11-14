@@ -274,7 +274,7 @@ def main_worker(gpu, ngpus_per_node, args):
         # print('train', epoch)
 
         if (epoch % args.cycle_epochs) + 1 > args.cycle_epochs - args.samples_per_cycle:
-            acc1 = validate(val_loader, model, criterion, args)
+            acc1, acc5 = validate(val_loader, model, criterion, args)
 
             if not args.multiprocessing_distributed or (args.multiprocessing_distributed
                     and args.rank % ngpus_per_node == 0):
@@ -283,11 +283,13 @@ def main_worker(gpu, ngpus_per_node, args):
                     'arch': args.arch,
                     'state_dict': model.state_dict(),
                     'best_acc1': best_acc1,
+                    'acc1': acc1, # validation acc
+                    'acc5': acc5,
                     'optimizer': optimizer.state_dict()}
                 path_ = args.export_dir
                 os.makedirs(path_ % (args.cycle_epochs, args.max_lr), exist_ok=True)
                 path_ = (path_ + f'/ImageNet-cSGLD_{args.arch}_{epoch:03}.pt.tar')
-                print('\nEpoch %s acc %s Save model to %s\n' % (epoch, acc1, path_))
+                print('\n * [SAVE] Epoch %s acc1 %s acc5 %s Save model to %s\n' % (epoch, acc1, acc5, path_))
                 save_checkpoint(tosave, filename=path_)
 
 def train(train_loader, model, criterion, optimizer, epoch, adjust_learning_rate_, args):
@@ -381,16 +383,16 @@ def validate(val_loader, model, criterion, args, ret_lp=False):
             batch_time.update(time.time() - end)
             end = time.time()
 
-            if not ret_lp and i % args.print_freq == 0:
-                progress.display(i)
+            #if not ret_lp and i % args.print_freq == 0:
+            #    progress.display(i)
 
         if not ret_lp:
-            print(' * Acc@1 {top1.avg:.3f} Acc@5 {top5.avg:.3f}'.format(top1=top1, top5=top5))
+            print(' * [TEST] Acc@1 {top1.avg:.3f} Acc@5 {top5.avg:.3f}'.format(top1=top1, top5=top5))
 
     if ret_lp:
         return np.vstack(preds)
 
-    return top1.avg
+    return top1.avg, top5.avg
 
 
 def save_checkpoint(state, filename):
