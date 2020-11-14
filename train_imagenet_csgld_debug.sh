@@ -20,7 +20,6 @@ command -v module >/dev/null 2>&1 && module load lang/Python system/CUDA
 source ../venv/bin/activate
 set -x
 
-DIR="models/ImageNet/resnet50/cSGLD_cycles15_savespercycle12_it1"
 DATAPATH="/work/projects/bigdata_sets/ImageNet/ILSVRC2012/raw-data/"
 DIST_URL="file://${SCRATCH}tmp/torchfilestore_debug"  # becareful: should be unique per script call
 rm -f ${SCRATCH}tmp/torchfilestore_debug # delete previous file
@@ -30,6 +29,7 @@ SAMPLES_PER_CYCLE=3
 BATCH_SIZE=128
 WORKERS=8
 PRINT_FREQ=10
+DIR="../models/ImageNet/resnet50/cSGLD_cycles${CYCLES}_samples${SAMPLES_PER_CYCLE}_bs${BATCH_SIZE}_DEBUG"
 
 
 # 1 node with 4 GPUs and 16 cpus (will use as much GPUs available on the node)
