@@ -1,6 +1,7 @@
 #!/bin/bash -l
 # DEBUG
-#SBATCH --time=4-00:00:00 # 4 days 12 hours
+#SBATCH --time=5-00:00:00 # 5 days
+#SBATCH --qos=long
 #SBATCH --partition=gpu   # Use the batch partition reserved for passive jobs
 #SBATCH -J cSGLDImageNet  # Set the job name
 #SBATCH -N 1              # 1 computing nodes
