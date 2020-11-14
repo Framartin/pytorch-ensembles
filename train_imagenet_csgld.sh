@@ -15,7 +15,7 @@ echo
 echo "cSGLD assumes a multi-GPU training, in our case 1 cycle tooks 15-17 hours (45 epochs) on 4 v100."
 echo
 
-command -v module >/dev/null 2>&1 && module load lang/Python
+command -v module >/dev/null 2>&1 && module load lang/Python system/CUDA
 source ../venv/bin/activate
 set -x
 
