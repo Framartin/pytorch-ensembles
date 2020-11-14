@@ -36,7 +36,7 @@ PRINT_FREQ=400
 # 1 node with 4 GPUs and 16 cpus (will use as much GPUs available on the node)
 python train_imagenet_csgld.py --data $DATAPATH --no-normalization --arch resnet50 \
   --export-dir $DIR --workers $WORKERS --batch-size $BATCH_SIZE \
-  --lr $LR --max-lr $LR --print-freq $PRINT_FREQ --dist-url tcp://127.0.0.1:5552 --multiprocessing-distributed --world-size 1 --rank 0 \
+  --lr $LR --max-lr $LR --print-freq $PRINT_FREQ --dist-url "tcp://127.0.0.1:5552" --multiprocessing-distributed --world-size 1 --rank 0 \
   --cycles $CYCLES --cycle-epochs 45 --samples-per-cycle $SAMPLES_PER_CYCLE --noise-epochs $SAMPLES_PER_CYCLE
 
 # no fixed seed to speed up
