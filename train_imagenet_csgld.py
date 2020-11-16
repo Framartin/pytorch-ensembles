@@ -83,7 +83,7 @@ parser.add_argument('--samples-per-cycle', type=int, default=3, help="Number of 
 parser.add_argument('--noise-epochs', type=int, default=3, help="Number of epochs to add noise (should be the same than number of samples per cycle)")
 parser.add_argument('--max-lr', default=0.1, type=float, help="Max learning rate in a cycle")
 parser.add_argument('--export-dir', type=str, default=None, required=True, help='training directory (default: None)')
-
+parser.add_argument('--debug', action='store_true', help='stop very early for debug')
 
 best_acc1 = 0
 
@@ -308,6 +308,9 @@ def train(train_loader, model, criterion, optimizer, epoch, adjust_learning_rate
 
     end = time.time()
     for i, (images, target) in enumerate(train_loader):
+        if args.debug and i >= 100:
+            break
+
         lr = adjust_learning_rate_(optimizer, epoch, i)
 
         # measure data loading time
