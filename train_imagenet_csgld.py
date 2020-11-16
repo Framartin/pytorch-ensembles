@@ -287,8 +287,8 @@ def main_worker(gpu, ngpus_per_node, args):
                     'acc5': acc5,
                     'optimizer': optimizer.state_dict()}
                 path_ = args.export_dir
-                os.makedirs(path_ % (args.cycle_epochs, args.max_lr), exist_ok=True)
-                path_ = (path_ + f'/ImageNet-cSGLD_{args.arch}_{epoch:03}.pt.tar')
+                os.makedirs(path_, exist_ok=True)
+                path_ = (path_ + f'/ImageNet-cSGLD_{args.arch}_{epoch:05}.pt.tar')
                 print('\n * [SAVE] Epoch %s acc1 %s acc5 %s Save model to %s\n' % (epoch, acc1, acc5, path_))
                 save_checkpoint(tosave, filename=path_)
 
