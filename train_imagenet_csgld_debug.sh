@@ -36,6 +36,6 @@ DIR="../models/ImageNet/resnet50/DEBUG_cSGLD_cycles${CYCLES}_samples${SAMPLES_PE
 python -u train_imagenet_csgld.py --data $DATAPATH --no-normalization --arch resnet50 \
   --export-dir $DIR --workers $WORKERS --batch-size $BATCH_SIZE \
   --lr $LR --max-lr $LR --print-freq $PRINT_FREQ --dist-url $DIST_URL --multiprocessing-distributed --world-size 1 --rank 0 \
-  --cycles $CYCLES --cycle-epochs 2 --samples-per-cycle $SAMPLES_PER_CYCLE --noise-epochs $SAMPLES_PER_CYCLE
+  --cycles $CYCLES --cycle-epochs 1 --samples-per-cycle $SAMPLES_PER_CYCLE --noise-epochs $SAMPLES_PER_CYCLE
 
 # no fixed seed to speed up
