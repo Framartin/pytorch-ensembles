@@ -6,8 +6,8 @@
 #SBATCH -J cSGLDImageNet  # Set the job name
 #SBATCH -N 1              # 1 computing nodes
 #SBATCH -n 1              # 1 tasks
-#SBATCH -c 8             # 16 cores per task
-#SBATCH --gpus 2          # 4 GPU per tasks
+#SBATCH -c 8              # 8 cores per task
+#SBATCH --gpus 1          # 1 GPU per tasks
 #SBATCH -C volta          # fix type of GPU to compare runtime
 #SBATCH -o "log/run_train_imagenet_csgld_debug_%j.log"
 #SBATCH --mail-type=end,fail
@@ -25,17 +25,17 @@ DIST_URL="file://${SCRATCH}tmp/torchfilestore_debug"  # becareful: should be uni
 rm -f ${SCRATCH}tmp/torchfilestore_debug # delete previous file
 LR=0.1
 CYCLES=1
-SAMPLES_PER_CYCLE=3
-BATCH_SIZE=128
+SAMPLES_PER_CYCLE=1
+BATCH_SIZE=64
 WORKERS=8
 PRINT_FREQ=10
-DIR="../models/ImageNet/resnet50/cSGLD_cycles${CYCLES}_samples${SAMPLES_PER_CYCLE}_bs${BATCH_SIZE}_DEBUG"
+DIR="../models/ImageNet/resnet50/DEBUG_cSGLD_cycles${CYCLES}_samples${SAMPLES_PER_CYCLE}_bs${BATCH_SIZE}"
 
 
 # 1 node with 4 GPUs and 16 cpus (will use as much GPUs available on the node)
 python -u train_imagenet_csgld.py --data $DATAPATH --no-normalization --arch resnet50 \
   --export-dir $DIR --workers $WORKERS --batch-size $BATCH_SIZE \
   --lr $LR --max-lr $LR --print-freq $PRINT_FREQ --dist-url $DIST_URL --multiprocessing-distributed --world-size 1 --rank 0 \
-  --cycles $CYCLES --cycle-epochs 45 --samples-per-cycle $SAMPLES_PER_CYCLE --noise-epochs $SAMPLES_PER_CYCLE
+  --cycles $CYCLES --cycle-epochs 2 --samples-per-cycle $SAMPLES_PER_CYCLE --noise-epochs $SAMPLES_PER_CYCLE
 
 # no fixed seed to speed up
