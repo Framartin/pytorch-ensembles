@@ -322,7 +322,7 @@ def train(train_loader, model, criterion, optimizer, epoch, adjust_learning_rate
         #loss = criterion(output, target)
         if (epoch % args.cycle_epochs) + 1 > args.cycle_epochs - args.noise_epochs:
             alpha = 1 - args.momentum
-            loss_noise = noise_loss(model, lr, alpha) / len(train_loader)
+            loss_noise = noise_loss(model, lr, alpha, args) / len(train_loader)
             loss = criterion(output, target) + loss_noise
         else:
             loss = criterion(output, target)
@@ -398,7 +398,7 @@ def validate(val_loader, model, criterion, args, ret_lp=False):
 def save_checkpoint(state, filename):
     torch.save(state, filename)
 
-def noise_loss(model, lr, alpha):
+def noise_loss(model, lr, alpha, args):
     noise_loss = 0.0
     noise_std = (2/lr*alpha)**0.5  # because we take grad of this term and multiply the result with lr
     for var in model.parameters():
