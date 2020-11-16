@@ -31,6 +31,7 @@ WORKERS=8
 PRINT_FREQ=10
 DIR="../models/ImageNet/resnet50/DEBUG_cSGLD_cycles${CYCLES}_samples${SAMPLES_PER_CYCLE}_bs${BATCH_SIZE}"
 
+date
 
 # 1 node with 4 GPUs and 16 cpus (will use as much GPUs available on the node)
 python -u train_imagenet_csgld.py --data $DATAPATH --no-normalization --arch resnet50 \
@@ -39,3 +40,5 @@ python -u train_imagenet_csgld.py --data $DATAPATH --no-normalization --arch res
   --cycles $CYCLES --cycle-epochs 1 --samples-per-cycle $SAMPLES_PER_CYCLE --noise-epochs $SAMPLES_PER_CYCLE
 
 # no fixed seed to speed up
+
+date
