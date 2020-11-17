@@ -1,13 +1,12 @@
 #!/bin/bash -l
-# DEBUG
-#SBATCH --time=5-00:00:00 # 5 days
+#SBATCH --time=9-00:00:00 # 9 days
 #SBATCH --qos=long
 #SBATCH --partition=gpu   # Use the batch partition reserved for passive jobs
 #SBATCH -J cSGLDImageNet  # Set the job name
 #SBATCH -N 1              # 1 computing nodes
 #SBATCH -n 1              # 1 tasks
 #SBATCH -c 16             # 16 cores per task
-#SBATCH --gpus 2          # 2 GPU per tasks
+#SBATCH --gpus 4          # 4 GPU per tasks
 #SBATCH -C volta          # fix type of GPU to compare runtime
 #SBATCH -o "log/run_train_imagenet_csgld_short_%j.log"
 #SBATCH --mail-type=end,fail
