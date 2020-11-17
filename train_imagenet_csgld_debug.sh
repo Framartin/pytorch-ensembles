@@ -1,6 +1,6 @@
 #!/bin/bash -l
 # DEBUG
-#SBATCH --time=0-03:00:00 # 3 hours
+#SBATCH --time=0-00:15:00 # 15 minutes
 #SBATCH --qos=besteffort
 #SBATCH --partition=gpu   # Use the batch partition reserved for passive jobs
 #SBATCH -J cSGLDImageNet  # Set the job name
