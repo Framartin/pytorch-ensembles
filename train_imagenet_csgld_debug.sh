@@ -23,18 +23,19 @@ set -x
 DATAPATH="/work/projects/bigdata_sets/ImageNet/ILSVRC2012/raw-data/"
 DIST_URL="file://${SCRATCH}tmp/torchfilestore_debug"  # becareful: should be unique per script call
 rm -f ${SCRATCH}tmp/torchfilestore_debug # delete previous file
+ARCH="inception_v3"
 LR=0.1
 CYCLES=1
 SAMPLES_PER_CYCLE=1
 BATCH_SIZE=64
 WORKERS=8
 PRINT_FREQ=10
-DIR="../models/ImageNet/resnet50/DEBUG_cSGLD_cycles${CYCLES}_samples${SAMPLES_PER_CYCLE}_bs${BATCH_SIZE}"
+DIR="../models/ImageNet/${ARCH}/DEBUG_cSGLD_cycles${CYCLES}_samples${SAMPLES_PER_CYCLE}_bs${BATCH_SIZE}"
 
 date
 
 # 1 node with 4 GPUs and 16 cpus (will use as much GPUs available on the node)
-python -u train_imagenet_csgld.py --data $DATAPATH --no-normalization --arch resnet50 \
+python -u train_imagenet_csgld.py --data $DATAPATH --no-normalization --arch $ARCH \
   --export-dir $DIR --workers $WORKERS --batch-size $BATCH_SIZE \
   --lr $LR --max-lr $LR --print-freq $PRINT_FREQ --dist-url $DIST_URL --multiprocessing-distributed --world-size 1 --rank 0 \
   --cycles $CYCLES --cycle-epochs 1 --samples-per-cycle $SAMPLES_PER_CYCLE --noise-epochs $SAMPLES_PER_CYCLE \
