@@ -1,6 +1,5 @@
 #!/bin/bash -l
 #SBATCH --time=0-02:00:00 # 9 days
-#SBATCH --qos=long
 #SBATCH --partition=gpu   # Use the batch partition reserved for passive jobs
 #SBATCH -J cSGLDinception  # Set the job name
 #SBATCH -N 1              # 1 computing nodes
