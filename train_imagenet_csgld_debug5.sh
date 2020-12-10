@@ -1,6 +1,6 @@
 #!/bin/bash -l
 # DEBUG
-#SBATCH --time=0-03:00:00 # 3 hours
+#SBATCH --time=0-04:00:00 # 4 hours
 #SBATCH --partition=gpu   # Use the batch partition reserved for passive jobs
 #SBATCH -J cSGLDdebug5  # Set the job name
 #SBATCH -N 1              # 1 computing nodes
