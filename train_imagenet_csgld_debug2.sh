@@ -20,7 +20,7 @@ source ../venv/bin/activate
 set -x
 
 DATAPATH="/work/projects/bigdata_sets/ImageNet/ILSVRC2012/raw-data/"
-ARCH="mobilenet_v2"
+ARCH="vgg16_bn"
 DIST_URL="file://${SCRATCH}tmp/torchfilestore_debug2"  # becareful: should be unique per script call
 rm -f ${SCRATCH}tmp/torchfilestore_debug2 # delete previous file
 LR=0.1
