@@ -1,6 +1,7 @@
 #!/bin/bash -l
 #SBATCH --time=8-12:00:00 # 8 days 12h (should take 7.125 days)
 #SBATCH --partition=gpu   # Use the batch partition reserved for passive jobs
+#SBATCH --qos=long
 #SBATCH -J cSGLDmobilenet  # Set the job name
 #SBATCH -N 1              # 1 computing nodes
 #SBATCH -n 1              # 1 tasks
