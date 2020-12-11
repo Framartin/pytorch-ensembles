@@ -18,6 +18,8 @@ import torchvision.datasets as datasets
 import torchvision.models as models
 from torch.autograd import Variable
 
+import timm
+
 from metrics import accuracy
 
 import warnings
@@ -25,7 +27,7 @@ warnings.filterwarnings("ignore")
 
 model_names = sorted(name for name in models.__dict__
     if name.islower() and not name.startswith("__")
-    and callable(models.__dict__[name]))
+    and callable(models.__dict__[name])) + timm.list_models()
 
 parser = argparse.ArgumentParser(description='PyTorch ImageNet Training')
 parser.add_argument('--data', metavar='DIR',
@@ -141,12 +143,17 @@ def main_worker(gpu, ngpus_per_node, args):
         dist.init_process_group(backend=args.dist_backend, init_method=args.dist_url,
                                 world_size=args.world_size, rank=args.rank)
     # create model
-    if args.pretrained:
-        print("=> using pre-trained model '{}'".format(args.arch))
-        model = models.__dict__[args.arch](pretrained=True)
+    if args.arch in models.__dict__:
+        if args.pretrained:
+            print("=> using pre-trained model '{}'".format(args.arch))
+            model = models.__dict__[args.arch](pretrained=True)
+        else:
+            print("=> creating model '{}'".format(args.arch))
+            model = models.__dict__[args.arch]()
+    elif args.arch in timm.list_models():
+        model = timm.create_model(args.arch, pretrained=args.pretrained)
     else:
-        print("=> creating model '{}'".format(args.arch))
-        model = models.__dict__[args.arch]()
+        raise ValueError('Unknown arch')
 
     if args.distributed:
         # For multiprocessing distributed, DistributedDataParallel constructor
