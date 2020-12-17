@@ -13,7 +13,7 @@ conda activate pytorch
 set -x
 
 #specify GPU
-CUDA_VISIBLE_DEVICES=3
+CUDA_VISIBLE_DEVICES=2
 
 
 DATAPATH="../../data/ILSVRC2012"
