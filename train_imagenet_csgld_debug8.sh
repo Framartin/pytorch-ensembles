@@ -1,6 +1,6 @@
 #!/bin/bash -l
 # launch with:
-# bash train_imagenet_csgld_resnext.sh >>log/run_train_imagenet_csgld_debug8.log 2>&1
+# bash train_imagenet_csgld_debug8.sh >>log/run_train_imagenet_csgld_debug8.log 2>&1
 
 echo
 echo "single GPU training - manual scheduling"
