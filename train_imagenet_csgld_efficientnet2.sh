@@ -23,7 +23,7 @@ command -v module >/dev/null 2>&1 && module load lang/Python system/CUDA
 source ../venv/bin/activate
 set -x
 
-DATAPATH="/work/projects/bigdata_sets/ImageNet/ILSVRC2012/raw-data/"
+DATAPATH="../../data/ILSVRC2012"
 ARCH="efficientnet_b0"
 
 # HPs closer to https://github.com/tensorflow/tpu/blob/master/models/official/efficientnet/main.py
