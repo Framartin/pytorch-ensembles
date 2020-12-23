@@ -21,6 +21,7 @@ from torch.autograd import Variable
 import timm
 
 from metrics import accuracy
+from utils import CrossEntropyLossGoogLeNet
 
 import warnings
 warnings.filterwarnings("ignore")
@@ -186,6 +187,8 @@ def main_worker(gpu, ngpus_per_node, args):
 
     # define loss function (criterion) and optimizer
     criterion = nn.CrossEntropyLoss().cuda(args.gpu)
+    if args.arch == 'googlenet':
+        criterion = CrossEntropyLossGoogLeNet().cuda(args.gpu)
 
     optimizer = torch.optim.SGD(model.parameters(), args.lr,
                                 momentum=args.momentum,
