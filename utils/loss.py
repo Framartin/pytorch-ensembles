@@ -5,7 +5,7 @@ class CrossEntropyLossGoogLeNet(nn.CrossEntropyLoss):
     """
     Weighted average of cross entropy on logits and auxilary logits
     """
-    def forward(self, input, target) -> Tensor:
+    def forward(self, input, target):
         if type(input).__name__ == 'GoogLeNetOutputs':
             logits, aux_logits2, aux_logits1 = input  # takes GoogLeNetOutputs with aux_logits
             loss1 = super(CrossEntropyLossGoogLeNet, self).forward(logits, target)
