@@ -21,7 +21,7 @@ from torch.autograd import Variable
 import timm
 
 from metrics import accuracy
-from utils import CrossEntropyLossGoogLeNet
+from utils.loss import CrossEntropyLossGoogLeNet
 
 import warnings
 warnings.filterwarnings("ignore")
