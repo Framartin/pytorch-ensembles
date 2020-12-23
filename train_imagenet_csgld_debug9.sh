@@ -31,6 +31,7 @@ python -u train_imagenet_csgld.py --data $DATAPATH --no-normalization --arch $AR
   --export-dir $DIR --workers $WORKERS --batch-size $BATCH_SIZE \
   --lr $LR --max-lr $LR --print-freq $PRINT_FREQ --world-size 1 \
   --cycles $CYCLES --cycle-epochs 1 --samples-per-cycle $SAMPLES_PER_CYCLE --noise-epochs $SAMPLES_PER_CYCLE \
-  --gpu $CUDA_VISIBLE_DEVICES
+  --gpu $CUDA_VISIBLE_DEVICES  \
+  --debug
 
 date
