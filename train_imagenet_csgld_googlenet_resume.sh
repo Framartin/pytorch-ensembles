@@ -1,6 +1,6 @@
 #!/bin/bash -l
 # launch with:
-# bash train_imagenet_csgld_googlenet.sh >>log/run_train_imagenet_csgld_googlenet.log 2>&1
+# bash train_imagenet_csgld_googlenet_resume.sh >>log/run_train_imagenet_csgld_googlenet_resume.log 2>&1
 
 echo
 echo "single GPU training - manual scheduling"
@@ -16,7 +16,7 @@ CUDA_VISIBLE_DEVICES=0
 
 DATAPATH="../../data/ILSVRC2012"
 ARCH="googlenet"
-LR=0.1
+LR=0.05
 WEIGHT_DECAY=0.00004
 CYCLES=3
 SAMPLES_PER_CYCLE=3
