@@ -16,7 +16,7 @@ CUDA_VISIBLE_DEVICES=2
 
 
 DATAPATH="../../data/ILSVRC2012"
-ARCH="vgg16_bn"
+ARCH="vgg11_bn"
 LR=0.1  # in original vgg paper
 WEIGHT_DECAY=0.0005  # idem
 CYCLES=3
