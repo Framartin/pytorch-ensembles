@@ -18,7 +18,7 @@ CUDA_VISIBLE_DEVICES=2
 
 DATAPATH="../../data/ILSVRC2012"
 ARCH="vgg11_bn"
-LR=0.01  # smaller than 1rst cycle
+LR=0.005  # smaller than 1rst cycle
 WEIGHT_DECAY=0.0005
 CYCLES=3
 SAMPLES_PER_CYCLE=3
