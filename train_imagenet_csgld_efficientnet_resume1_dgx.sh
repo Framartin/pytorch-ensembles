@@ -11,7 +11,7 @@ source ../venv/bin/activate
 set -x
 
 #specify GPU
-CUDA_VISIBLE_DEVICES=0
+CUDA_VISIBLE_DEVICES=1
 
 
 DATAPATH="../../data/ILSVRC2012"
