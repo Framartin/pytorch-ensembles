@@ -6,8 +6,9 @@ echo
 echo "single GPU training"
 echo
 
-command -v module >/dev/null 2>&1 && module load lang/Python system/CUDA
-source ../venv/bin/activate
+source /opt/miniconda/bin/activate
+conda activate pytorch
+
 set -x
 
 #specify GPU
