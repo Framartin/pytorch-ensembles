@@ -11,7 +11,7 @@ conda activate pytorch
 set -x
 
 #specify GPU
-CUDA_VISIBLE_DEVICES=1
+CUDA_VISIBLE_DEVICES=3
 
 DATAPATH="../../data/ILSVRC2012"
 ARCH="wide_resnet50_2"
