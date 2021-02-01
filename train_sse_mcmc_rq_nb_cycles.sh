@@ -38,4 +38,5 @@ python sse_mcmc_train.py $INJECT_NOISE_OR_NOT \
     --model="$ARCH" --dataset="$DATASET" --noise_epochs=$NOISE_EPOCHS --data_path="$DATA_PATH" \
     --alpha=1 --cycles=$CYCLES --iter="$ITER" \
     --cycle_epochs=$CYCLE_EPOCHS --cycle_saves=$CYCLE_SAVES --max_lr=$MAX_LR --wd=$WD \
-    --device_id 0 --transform="NoNormalization"
+    --device_id 0 --transform="NoNormalization" \
+    --batch_size 512
