@@ -28,6 +28,10 @@ DATA_PATH="../data"
 #  NOISE_EPOCHS=3
 
 for NB_SAMPLES in {1..5} ; do
+  # skip training with 3 samples / cycles (already done)
+  if [ $NB_SAMPLES -eq 3 ]; then
+      continue
+  fi
 
   INJECT_NOISE_OR_NOT="--inject_noise"
   MAX_LR=0.5
