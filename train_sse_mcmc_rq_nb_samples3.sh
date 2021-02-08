@@ -11,7 +11,7 @@ conda activate pytorch
 set -x
 
 #specify GPU
-export CUDA_VISIBLE_DEVICES=2
+export CUDA_VISIBLE_DEVICES=3
 
 DATASET="CIFAR10"
 ARCH="PreResNet110"
@@ -27,7 +27,7 @@ DATA_PATH="../data"
 #  CYCLES=34
 #  NOISE_EPOCHS=3
 
-for NB_SAMPLES in {1..5} ; do
+for NB_SAMPLES in {6..9} ; do
 
   INJECT_NOISE_OR_NOT="--inject_noise"
   MAX_LR=0.5
