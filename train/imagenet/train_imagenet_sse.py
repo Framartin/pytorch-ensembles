@@ -200,7 +200,7 @@ def main_worker(gpu, ngpus_per_node, args):
     # Data loading code
     traindir = os.path.join(args.data, 'train')
     valdir = os.path.join(args.data, 'val')
-    normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
+    normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],  # TODO
                                      std=[0.229, 0.224, 0.225])
 
     train_dataset = datasets.ImageFolder(
@@ -231,7 +231,7 @@ def main_worker(gpu, ngpus_per_node, args):
         batch_size=args.batch_size, shuffle=False,
         num_workers=args.workers, pin_memory=True)
 
-    args.cycles = 200
+    args.cycles = 200  # TODO
     epoch_batches = len(train_loader)
     epochs = args.cycle_epochs * args.cycles
 

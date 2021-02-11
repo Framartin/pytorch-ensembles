@@ -31,7 +31,7 @@ DIR="../models/ImageNet/${ARCH}/cSGLD_cycles${CYCLES}_samples${SAMPLES_PER_CYCLE
 
 date
 
-# mobilenet should take 1h16 / epoch on 1 V100
+# efficientnet B0 should take 1h16 / epoch on 1 V100
 python -u train_imagenet_csgld.py --data $DATAPATH --no-normalization --arch $ARCH \
   --export-dir $DIR --workers $WORKERS --batch-size $BATCH_SIZE \
   --lr $LR --max-lr $LR --print-freq $PRINT_FREQ --world-size 1 \

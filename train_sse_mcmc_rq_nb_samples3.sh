@@ -3,7 +3,7 @@
 echo "*** Train 1 cSGLD for sample / cycle ***"
 
 # launch with:
-# bash train_sse_mcmc_rq_nb_samples2.sh >>log/cifar10/train_sse_mcmc_rq_nb_samples2.log 2>&1
+# bash train_sse_mcmc_rq_nb_samples3.sh >>log/cifar10/train_sse_mcmc_rq_nb_samples3.log 2>&1
 
 source /opt/miniconda/bin/activate
 conda activate pytorch
