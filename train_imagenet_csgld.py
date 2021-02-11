@@ -251,7 +251,7 @@ def main_worker(gpu, ngpus_per_node, args):
     epoch_batches = len(train_loader)
     epochs = args.cycle_epochs * args.cycles
 
-    if args.rank % ngpus_per_node == 0:
+    if args.rank % max(1, ngpus_per_node) == 0:
         print('epochs: %s' % epochs)
         print('epoch_batches: %s' % epoch_batches)
         print('GPUs:', torch.cuda.device_count())
